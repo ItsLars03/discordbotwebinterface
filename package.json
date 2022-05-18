@@ -1,5 +1,27 @@
 {
-  "dependencies": {
-    "discord.js": "^13.7.0"
+  "name": "discordbotwebinterface",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "private": "true",
+  "workspaces": [
+    "packages/*"
+  ],
+  "scripts": {
+    "start": "lerna run --parallel start"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ItsLars03/discordbotwebinterface.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/ItsLars03/discordbotwebinterface/issues"
+  },
+  "homepage": "https://github.com/ItsLars03/discordbotwebinterface#readme",
+  "devDependencies": {
+    "lerna": "^4.0.0"
   }
 }
