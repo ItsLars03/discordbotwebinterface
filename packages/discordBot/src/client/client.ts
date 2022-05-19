@@ -12,6 +12,7 @@ export default class DiscordClient extends Client {
 
   constructor(options: ClientOptions, config: typeof Config) {
     super(options);
+    console.log("config", config);
     this._prefix = config.bot.prefix;
   }
 

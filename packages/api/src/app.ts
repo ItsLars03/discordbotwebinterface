@@ -1,7 +1,7 @@
-import express from "express";
-import morgan from "morgan";
+import * as express from "express";
+import * as morgan from "morgan";
 import helmet from "helmet";
-import cors from "cors";
+import * as cors from "cors";
 
 // import { notFound, errorHandler } from "./middlewares";
 // import uploader from "./uploader";

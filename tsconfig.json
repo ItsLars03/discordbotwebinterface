@@ -1,5 +1,13 @@
 {
-    "compilerOptions": {
-      "baseUrl": "./packages"
-    }
+  "compilerOptions": {
+    "target": "ESNext",
+    "module": "CommonJS",
+    "declaration": false,
+    "strict": true,
+    "sourceMap": true,
+    "noImplicitAny": true,
+    "alwaysStrict": true,
+    "typeRoots": ["./node_modules/@types"],
+    "moduleResolution": "node"
+  }
 }
