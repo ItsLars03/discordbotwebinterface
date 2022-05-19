@@ -1,5 +1,5 @@
 import * as path from "path";
-import { promises as fs } from "fs";
+import { promises as fs } from "node:fs";
 import DiscordClient from "../client/client";
 import { clientEvents } from "../client/clientEvents";
 

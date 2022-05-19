@@ -24,6 +24,7 @@
   },
   "homepage": "https://github.com/ItsLars03/discordbotwebinterface#readme",
   "devDependencies": {
+    "kill-port": "^2.0.0",
     "lerna": "^4.0.0",
     "rimraf": "^3.0.2"
   }
