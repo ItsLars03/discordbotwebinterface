@@ -9,7 +9,7 @@
   ],
   "scripts": {
     "start": "lerna run --parallel start",
-    "clean": "rimraf \"packages/**/lib\" \"packages/**/*.tsbuildinfo\"",
+    "clean": "rimraf \"packages/**/dist\" \"packages/**/*.tsbuildinfo\"",
     "compile": "tsc -b tsconfig.build.json"
   },
   "repository": {
