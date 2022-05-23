@@ -2,6 +2,9 @@ import { User } from "next-auth"
 import axios from "axios"
 import nodeCache from "node-cache"
 
+if (!global.cachedRequests) {
+  global.cachedRequests = {}
+}
 const scopes = ["identify", "email", "guilds"].join("%20")
 const clientId = "793090362457063444"
 export const mainGuildId = "905833685977272371"
@@ -58,6 +61,9 @@ export function refreshAccessToken(user: User, refreshToken: string) {
   )
 }
 
+global.i = 0
+const MAX_TIME: number = 30 * 1000
+
 export async function getUserGuildInfo(
   accessToken: string,
   userId: string,
@@ -66,22 +72,50 @@ export async function getUserGuildInfo(
   // return null
   if (!accessToken) return null
 
-  if (!force && userGuildData.has(userId)) {
-    console.log("getting from cache")
-    return userGuildData.get(userId) as GuildUserInfo
+  if (
+    cachedRequests["guildMemberRequest"]?.firstRequest != null &&
+    Date.now() - cachedRequests["guildMemberRequest"].firstRequest < MAX_TIME &&
+    cachedRequests["guildMemberRequest"].data != null
+  ) {
+    return cachedRequests["guildMemberRequest"].data
   }
 
-  if (force) {
-    console.log("forcing request...")
+  if (
+    cachedRequests["guildMemberRequest"].firstRequest != null &&
+    Date.now() - cachedRequests["guildMemberRequest"].firstRequest < MAX_TIME &&
+    cachedRequests["guildMemberRequest"].promise != null
+  ) {
+    console.log("Sending here!", i)
+
+    try {
+      const { data } = await cachedRequests["guildMemberRequest"].promise
+      return data
+    } catch (error) {
+      return null
+    }
   }
+
+  console.log(
+    "sending request...",
+    global.i,
+    cachedRequests["guildMemberRequest"]
+  )
+
   try {
     //https://discord.com/api/users/@me/guilds
+    if (
+      cachedRequests["guildMemberRequest"].firstRequest == null ||
+      cachedRequests["guildMemberRequest"].firstRequest >= MAX_TIME
+    ) {
+      cachedRequests["guildMemberRequest"].firstRequest = Date.now()
+    }
 
     console.log(
       "Sending api request",
       `is in cache = ${userGuildData.has(userId)}`
     )
-    const { data } = await axios.get(
+
+    cachedRequests["guildMemberRequest"].promise = axios.get(
       "https://discord.com/api/v8/users/@me/guilds/" + mainGuildId + "/member",
       {
         headers: {
@@ -89,13 +123,21 @@ export async function getUserGuildInfo(
         },
       }
     )
+    global.i += 1
+
+    const { data } = await cachedRequests["guildMemberRequest"].promise
+
+    // console.log("data", data)
+
+    if (data) {
+      cachedRequests["guildMemberRequest"].data = data
+    }
 
     // const userGuilds = data as Guild[]
 
     // guilds.set(userId, userGuilds)
 
     const guildUser = data as GuildUserInfo
-    userGuildData.set(guildUser.user.id, guildUser)
     // console.log("data", data)
 
     if (guildUser) {

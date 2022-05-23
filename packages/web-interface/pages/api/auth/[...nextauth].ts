@@ -4,12 +4,11 @@ import { getUserGuildInfo, URL } from "../../../lib/DiscordApi"
 
 async function refreshAccessToken(token: any) {}
 
-//1653405665225
 export default NextAuth({
   providers: [
     DiscordProvider({
-      clientId: process.env.DISCORD_CLIENT_ID,
-      clientSecret: process.env.DISCORD_CLIENT_SECRET,
+      clientId: process.env.DISCORD_CLIENT_ID as string,
+      clientSecret: process.env.DISCORD_CLIENT_SECRET as string,
       authorization: URL,
     }),
   ],
@@ -22,25 +21,12 @@ export default NextAuth({
   callbacks: {
     async jwt({ token, account, user, profile }) {
       let userGuildInfo = null
-      //TOKEN: https://i.thimo.dev/62718c3a65c6e8c62298540f
-      //1652213800
-      //1653753267364
-
-      // console.log("token jwt", token)
-      // console.log("hasAccount", account != null)
-
       if (account && token) {
         userGuildInfo = await getUserGuildInfo(
           token.accessToken as string,
           token.sub as string,
           true
         )
-
-        // if (userGuildInfo == null) {
-        //   console.log(1)
-        //   throw new Error('Blocked user.')
-        // }
-
         return {
           ...token,
           accessToken: account.access_token,
@@ -69,7 +55,6 @@ export default NextAuth({
           Date.now()
         )
       }
-      console.log(1)
       return {
         ...token,
         userGuildInfo: userGuildInfo,
@@ -77,9 +62,6 @@ export default NextAuth({
     },
 
     async session({ session, user, token }) {
-      // console.log("session", session)
-      // console.log("token", token)
-      // console.log("user", user)
       return {
         ...session,
         token: token,
