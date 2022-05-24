@@ -4,7 +4,7 @@ import BaseCommand from "../../utils/structures/BaseCommand";
 
 export default class MuteCommand extends BaseCommand {
   constructor() {
-    super("mute", "moderatoin", {});
+    super("mute", "moderation", {});
   }
 
   muteRole: string = "978623128580276284";
