@@ -24,6 +24,7 @@ export default class MuteCommand extends BaseCommand {
     }
 
     target.roles.add(this.muteRole);
+    message.reply("done.");
   }
 
   // durationFromString(value: string) {
