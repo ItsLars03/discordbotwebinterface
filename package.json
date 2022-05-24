@@ -10,7 +10,6 @@
   "scripts": {
     "clean": "rimraf \"packages/**/dist\" \"packages/**/*.tsbuildinfo\"",
     "compile": "tsc -b tsconfig.build.json",
-    "test": "run-s start",
     "start-discord-bot": "cd ./packages/discordBot/ && node dist/index.js",
     "start-api": "cd ./packages/api/ && node dist/index.js",
     "start-web-interface": "cd ./packages/web-interface && npm run start"
