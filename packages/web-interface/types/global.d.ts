@@ -14,5 +14,4 @@ declare global {
       firstRequest?: number
     }
   }
-  var i: number
 }

@@ -61,7 +61,6 @@ export function refreshAccessToken(user: User, refreshToken: string) {
   )
 }
 
-global.i = 0
 const MAX_TIME: number = 30 * 1000
 
 export async function getUserGuildInfo(
@@ -85,7 +84,7 @@ export async function getUserGuildInfo(
     Date.now() - cachedRequests["guildMemberRequest"].firstRequest < MAX_TIME &&
     cachedRequests["guildMemberRequest"].promise != null
   ) {
-    console.log("Sending here!", i)
+    console.log("Sending here!")
 
     try {
       const { data } = await cachedRequests["guildMemberRequest"].promise
@@ -95,11 +94,7 @@ export async function getUserGuildInfo(
     }
   }
 
-  console.log(
-    "sending request...",
-    global.i,
-    cachedRequests["guildMemberRequest"]
-  )
+  console.log("sending request...", cachedRequests["guildMemberRequest"])
 
   try {
     //https://discord.com/api/users/@me/guilds
@@ -123,7 +118,6 @@ export async function getUserGuildInfo(
         },
       }
     )
-    global.i += 1
 
     const { data } = await cachedRequests["guildMemberRequest"].promise
 
