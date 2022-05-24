@@ -20,6 +20,7 @@ export default class MessageEvent extends BaseDiscordEvent {
         .split(/\s+/);
       const command = client.commands.get(cmdName.toLowerCase());
       if (command) {
+        console.log("Executing command", command.getName());
         command.run(client, message, cmdArgs);
       }
     }

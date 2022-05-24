@@ -3,8 +3,13 @@ import axios from "axios"
 import nodeCache from "node-cache"
 
 if (!global.cachedRequests) {
-  global.cachedRequests = {}
+  global.cachedRequests = {
+    guildMemberRequest: {},
+  }
+} else if (!global.cachedRequests["guildMemberRequest"]) {
+  global.cachedRequests["guildMemberRequest"] = {}
 }
+
 const scopes = ["identify", "email", "guilds"].join("%20")
 const clientId = "793090362457063444"
 export const mainGuildId = "905833685977272371"

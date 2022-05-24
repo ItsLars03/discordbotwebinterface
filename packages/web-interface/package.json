@@ -3,7 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "start": "kill-port 3000 && next dev",
+    "start": "next dev",
     "build": "next build",
     "start-production": "next start",
     "lint": "next lint"
