@@ -3,8 +3,9 @@ import * as morgan from "morgan";
 import helmet from "helmet";
 import * as cors from "cors";
 
-// import { notFound, errorHandler } from "./middlewares";
-// import uploader from "./uploader";
+import notFound from "./middlewares/notFound";
+import errorHandler from "./middlewares/errorHandler";
+import api from "./api";
 
 const app = express();
 
@@ -13,9 +14,9 @@ app.use(helmet());
 app.use(cors());
 app.use(express.json());
 
-// app.use("/", uploader);
+app.use("/api/v1", api);
 
-// app.use(notFound);
-// app.use(errorHandler);
+app.use(notFound);
+app.use(errorHandler);
 
 export default app;
