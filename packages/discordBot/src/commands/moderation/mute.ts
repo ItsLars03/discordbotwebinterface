@@ -28,8 +28,8 @@ export default class MuteCommand extends BaseCommand {
   }
 
   // durationFromString(value: string) {
-  //     let duration = 0;
-
+  //     let duration = 0; 
+ 
   //     for (let singleValue of value.split(" ")) {
   //         let tmpDuration = 0
   //         let idk = singleValue.replace(/[0-9]+/, "")
