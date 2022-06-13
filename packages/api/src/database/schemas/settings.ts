@@ -1,6 +1,6 @@
 import { model, Schema } from "mongoose";
 
-interface Settings {
+export interface Settings {
   guildId: string;
   prefix: string;
 }

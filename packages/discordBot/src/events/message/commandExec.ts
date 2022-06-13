@@ -8,20 +8,28 @@ export default class MessageEvent extends BaseDiscordEvent {
   }
 
   async run(client: DiscordClient, message: Message) {
-    if (!message.guild) return;
+    if (!message.guild || !message.guildId) return;
     if (message.author.bot) return;
-    if (
-      message.content.startsWith(globalConfig.bot.prefix) ||
-      message.content.startsWith("/")
-    ) {
+    const prefix = globalCache.guildData.get(message.guildId)?.prefix;
+    if (prefix == null) {
+      console.error(
+        "Not executing command because there is no guild data... GuildId=",
+        message.guildId
+      );
+      return;
+    }
+
+    if (message.content.startsWith(prefix)) {
       const [cmdName, ...cmdArgs] = message.content
-        .slice(client.prefix.length)
+        .slice(prefix.length)
         .trim()
         .split(/\s+/);
       const command = client.commands.get(cmdName.toLowerCase());
       if (command) {
-        console.log("Executing command", command.getName());
         command.run(client, message, cmdArgs);
+      } else {
+        //give exp
+        ws.emit("level-system:giveExp", message);
       }
     }
   }

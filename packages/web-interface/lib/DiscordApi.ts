@@ -43,7 +43,7 @@ interface GuildUser {
 
 export const URL =
   API_ENDPOINT +
-  "/oauth2/authorize?client_id=793090362457063444&redirect_uri=http%3A%2F%2Flocalhost%3A3000%2Fapi%2Fauth%2Fcallback%2Fdiscord&response_type=code&scope=identify%20email%20guilds%20guilds.members.read"
+  "/oauth2/authorize?client_id=882231855745736744&redirect_uri=http%3A%2F%2Flocalhost%3A3000%2Fapi%2Fauth%2Fcallback%2Fdiscord&response_type=code&scope=identify%20email%20guilds%20guilds.members.read"
 
 export function refreshAccessToken(user: User, refreshToken: string) {
   const refreshUrl = API_ENDPOINT + "/oath2/token"

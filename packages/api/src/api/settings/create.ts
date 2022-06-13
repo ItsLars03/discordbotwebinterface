@@ -11,8 +11,11 @@ router.post("/:id", async (req, res, next) => {
 
   try {
     const data = await settings.create({ guildId: req.params.id });
+    global.libs.socketUtils.sendEvery("settings-create", req.params.id, {
+      ...data.toObject(),
+    });
     res.json({
-      ...data,
+      ...data.toObject(),
     });
   } catch (error) {
     next(error as Error);

@@ -8,27 +8,15 @@ export class StateManager extends EventEmitter {
   constructor();
 
   public on(
-    event: WsEvents,
+    event: string,
     listener: (data: any, shardID: number) => void
   ): this;
   public once(
-    event: WsEvents,
+    event: string,
     listener: (data: any, shardID: number) => void
   ): this;
-  public emit(event: WsEvents, ...args: unknown[]): any;
+  public emit(event: string, ...args: unknown[]): any;
 }
-
-type WsEvents =
-  | "UPDATENICKNAMES"
-  | "WS_READY"
-  | "WS_PREREADY"
-  | "CREATETICKET"
-  | "PRE"
-  | "PERSISTENT_MESSAGES"
-  | "APPLICATION_ACCEPT"
-  | "APPLICATION_REJECT"
-  | "APPLICATION_VOTES_REQUIRED"
-  | "APPLICATION_CLOSE";
 
 type discordEvents =
   | "applicationCommandCreate"

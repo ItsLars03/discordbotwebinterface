@@ -2,6 +2,8 @@ import * as path from "path";
 import { promises as fs } from "node:fs";
 import DiscordClient from "../client/client";
 import { clientEvents } from "../client/clientEvents";
+import BaseCustomEvent from "./structures/BaseCustomEvent";
+import BaseSocketEvent from "./structures/BaseSocketEvent";
 
 export async function registerCommands(
   client: DiscordClient,
@@ -51,16 +53,22 @@ export async function registerEvents(
       if (event.options?.disabled) continue;
       if (clientEvents.includes(event.getName())) {
         console.log(
-          `[Events] registering discord event => ${path.join(dir, file)}`
+          `[Events - Discord] registering event => ${path.join(dir, file)}`
         );
-        client.events.push(event.getName(), event);
+        client.events.push(event);
         client.on(event.getName(), event.run.bind(event, client));
-      } else {
-        //   console.log(
-        //     `[Events] registering custom event => ${path.join(dir, file)}`
-        //   )
-        //   client.customEvents.push(event.getName(), event)
-        //   global.ws.on(event.getName(), event.run.bind(event, client))
+      } else if (event instanceof BaseCustomEvent) {
+        console.log(
+          `[Events - Custom] registering event => ${path.join(dir, file)}`
+        );
+        client.customEvents.push(event);
+        global.ws.on(event.getName(), event.run.bind(event, client));
+      } else if (event instanceof BaseSocketEvent) {
+        console.log(
+          `[Events - Socket] registering event => ${path.join(dir, file)}`
+        );
+        client.socketEvents.push(event);
+        global.socket.on(event.getName(), event.run.bind(event, client));
       }
 
       if (event.init instanceof Function) {

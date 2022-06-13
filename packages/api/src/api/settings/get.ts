@@ -15,7 +15,8 @@ router.get("/:id", async (req, res, next) => {
       next();
       return;
     }
-    res.status(200).json({ ...data });
+
+    res.status(200).json({ ...data.toObject() });
   } catch (error) {
     next(error as Error);
   }
